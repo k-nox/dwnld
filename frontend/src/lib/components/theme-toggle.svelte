@@ -1,15 +1,40 @@
 <script lang="ts">
 	import Sun from 'lucide-svelte/icons/sun';
 	import Moon from 'lucide-svelte/icons/moon';
-	import { toggleMode } from 'mode-watcher';
-	import { Button } from '$lib/components/ui/button';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import { setMode, resetMode } from 'mode-watcher';
+	import { DarkMode, LightMode, ResetMode } from '$lib/wailsjs/go/theme/Settings';
+	import { buttonVariants } from './ui/button';
+
+	const handleLight = async () => {
+		setMode('light');
+		await LightMode();
+	};
+
+	const handleDark = async () => {
+		setMode('dark');
+		await DarkMode();
+	};
+
+	const handleReset = async () => {
+		resetMode();
+		await ResetMode();
+	};
 </script>
 
-<Button onclick={toggleMode} variant="outline" size="icon">
-	<Sun
-		class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
-	/>
-	<Moon
-		class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
-	/>
-</Button>
+<DropdownMenu.Root>
+	<DropdownMenu.Trigger class={buttonVariants({ variant: 'outline', size: 'icon' })}>
+		<Sun
+			class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+		/>
+		<Moon
+			class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+		/>
+		<span class="sr-only">Toggle theme</span>
+	</DropdownMenu.Trigger>
+	<DropdownMenu.Content align="end">
+		<DropdownMenu.Item onclick={handleLight}>Light</DropdownMenu.Item>
+		<DropdownMenu.Item onclick={handleDark}>Dark</DropdownMenu.Item>
+		<DropdownMenu.Item onclick={handleReset}>System</DropdownMenu.Item>
+	</DropdownMenu.Content>
+</DropdownMenu.Root>

@@ -4,10 +4,13 @@ import (
 	"embed"
 
 	"github.com/k-nox/dwnld/app"
+	"github.com/k-nox/dwnld/app/theme"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"github.com/wailsapp/wails/v2/pkg/options/mac"
+	"github.com/wailsapp/wails/v2/pkg/options/windows"
 )
 
 //go:embed all:frontend/build
@@ -15,7 +18,7 @@ var assets embed.FS
 
 func main() {
 	// Create an instance of the app structure
-	app := app.New()
+	a := app.New()
 
 	// Create application with options
 	err := wails.Run(&options.App{
@@ -25,10 +28,40 @@ func main() {
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
-		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
-		OnStartup:        app.Startup,
+		BackgroundColour: theme.DarkBackground,
+		OnStartup:        a.Startup,
 		Bind: []interface{}{
-			app.Downloder,
+			a.Downloder,
+			a.Settings,
+		},
+		EnableDefaultContextMenu: true,
+		Mac: &mac.Options{
+			TitleBar: mac.TitleBarHiddenInset(),
+			About: &mac.AboutInfo{
+				Title:   "dwnld",
+				Message: "A dead-simple GUI for yt-dlp, powered by Wails and SvelteKit",
+			},
+		},
+		Windows: &windows.Options{
+			CustomTheme: &windows.ThemeSettings{
+				// Active
+				DarkModeTitleBar:  windows.RGB(theme.DarkBackground.R, theme.DarkBackground.G, theme.DarkBackground.B),
+				DarkModeTitleText: theme.DarkForeground,
+				DarkModeBorder:    theme.DarkBorder,
+
+				LightModeTitleBar:  windows.RGB(theme.LightBackground.R, theme.LightBackground.G, theme.LightBackground.B),
+				LightModeTitleText: theme.LightForegroud,
+				LightModeBorder:    theme.LightBorder,
+
+				// Inactive
+				DarkModeTitleBarInactive:  theme.DarkMuted,
+				DarkModeTitleTextInactive: theme.DarkMutedForeground,
+				DarkModeBorderInactive:    theme.DarkBorder,
+
+				LightModeTitleBarInactive:  theme.LightMuted,
+				LightModeTitleTextInactive: theme.LightMutedForeground,
+				LightModeBorderInactive:    theme.LightBorder,
+			},
 		},
 	})
 	if err != nil {
