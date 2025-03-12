@@ -18,7 +18,7 @@ var assets embed.FS
 
 func main() {
 	// Create an instance of the app structure
-	a := app.New()
+	app := app.New()
 
 	// Create application with options
 	err := wails.Run(&options.App{
@@ -29,10 +29,10 @@ func main() {
 			Assets: assets,
 		},
 		BackgroundColour: theme.DarkBackground,
-		OnStartup:        a.Startup,
+		OnStartup:        app.Startup,
 		Bind: []interface{}{
-			a.Downloder,
-			a.Settings,
+			app.Downloder,
+			app.Settings,
 		},
 		EnableDefaultContextMenu: true,
 		Mac: &mac.Options{

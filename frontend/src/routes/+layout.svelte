@@ -7,7 +7,7 @@
 </script>
 
 <ModeWatcher />
-<Toaster richColors closeButton />
+<Toaster richColors />
 <div class="grid h-screen grid-cols-12 grid-rows-12">
 	<header class="col-span-12 row-span-1 flex flex-row items-center justify-end p-6">
 		<ThemeToggle />
