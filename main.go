@@ -1,8 +1,9 @@
 package main
 
 import (
-	"dwnld/app"
 	"embed"
+
+	"github.com/k-nox/dwnld/app"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"

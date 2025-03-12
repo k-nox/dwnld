@@ -1,4 +1,4 @@
-module dwnld
+module github.com/k-nox/dwnld
 
 go 1.23
 
