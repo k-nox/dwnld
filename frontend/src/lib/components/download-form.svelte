@@ -5,6 +5,7 @@
 	import { Download } from '$lib/wailsjs/go/app/Downloader';
 	import { toast } from 'svelte-sonner';
 	import DirectoryInput from './directory-input.svelte';
+	import TemplatePopover from './template-popover.svelte';
 
 	const form = $state({
 		url: '',
@@ -34,13 +35,13 @@
 </script>
 
 <form class="flex min-h-full flex-col items-center justify-center gap-4" onsubmit={download}>
-	<div class="flex w-full justify-center gap-4">
+	<div class="flex w-full items-end justify-center gap-4">
 		<div class="w-1/3">
 			<Label for="url" class="m-1">URL</Label>
 			<Input id="url" type="url" placeholder="video url" bind:value={form.url} required />
 		</div>
 		<div class="w-1/3">
-			<Label for="templ" class="m-1">Output Template</Label>
+			<Label for="templ" class="m-1">Output Template<TemplatePopover /></Label>
 			<Input
 				id="templ"
 				type="text"
