@@ -2,10 +2,11 @@
 	import * as Select from '$lib/components/ui/select';
 	import { app } from '$lib/wailsjs/go/models';
 
-	let { value = $bindable() }: { value: app.Resolution | undefined } = $props();
+	let { value = $bindable(), disabled }: { value: app.Resolution | undefined; disabled: boolean } =
+		$props();
 </script>
 
-<Select.Root type="single" bind:value name="resolution" required>
+<Select.Root type="single" bind:value name="resolution" required {disabled}>
 	<Select.Trigger>
 		{value ? value : 'Select a resolution.'}
 	</Select.Trigger>

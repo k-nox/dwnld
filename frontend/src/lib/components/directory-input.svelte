@@ -5,7 +5,7 @@
 	import { ChooseDirectory } from '$lib/wailsjs/go/app/Downloader';
 	import { LogDebug } from '$lib/wailsjs/runtime/runtime';
 
-	let { value = $bindable() }: { value: string } = $props();
+	let { value = $bindable(), disabled }: { value: string; disabled: boolean } = $props();
 	const chooseDirectory = async () => {
 		try {
 			value = await ChooseDirectory();
@@ -21,6 +21,16 @@
 
 <Label for="dir" class="m-1">Output Directory</Label>
 <div class="flex w-1/2 rounded-md border border-input shadow-sm">
-	<Button variant="secondary" type="button" onclick={chooseDirectory}>Choose Directory</Button>
-	<Input id="dir" class="border-0 focus-visible:ring-0" required readonly type="text" bind:value />
+	<Button variant="secondary" type="button" onclick={chooseDirectory} {disabled}
+		>Choose Directory</Button
+	>
+	<Input
+		id="dir"
+		class="border-0 focus-visible:ring-0"
+		required
+		readonly
+		{disabled}
+		type="text"
+		bind:value
+	/>
 </div>

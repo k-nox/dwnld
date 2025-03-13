@@ -10,9 +10,6 @@
 	import { app } from '$lib/wailsjs/go/models';
 	import ResolutionSelect from './resolution-select.svelte';
 
-	// const form: app.Options = $state(
-	// 	new app.Options({ targetResolution: app.Resolution.RESOLUTION_1080 })
-	// );
 	const form: {
 		url: string;
 		outputDir: string;
@@ -25,8 +22,11 @@
 		targetResolution: undefined
 	});
 
+	let loading = $state(false);
+
 	const download = async (e: SubmitEvent) => {
 		e.preventDefault();
+		loading = true;
 		toast.promise(Download(app.Options.createFrom(form)), {
 			loading: 'Downloading...',
 			success: () => {
@@ -41,6 +41,9 @@
 					msg = e.message;
 				}
 				return msg;
+			},
+			finally: () => {
+				loading = false;
 			}
 		});
 	};
@@ -50,7 +53,14 @@
 	<Label for="url" class="m-1"
 		>URL<InfoPopover>Currently only single videos are supported.</InfoPopover></Label
 	>
-	<Input id="url" type="url" placeholder="video url" bind:value={form.url} required />
+	<Input
+		id="url"
+		type="url"
+		placeholder="video url"
+		bind:value={form.url}
+		required
+		disabled={loading}
+	/>
 {/snippet}
 
 {#snippet outputTemplateInput()}
@@ -59,6 +69,7 @@
 		id="templ"
 		type="text"
 		placeholder="%(title)s [%(id)s].%(ext)s"
+		disabled={loading}
 		bind:value={form.outputTempl}
 	/>
 {/snippet}
@@ -70,7 +81,7 @@
 			limit for the available resolutions.</InfoPopover
 		></Label
 	>
-	<ResolutionSelect bind:value={form.targetResolution} />
+	<ResolutionSelect disabled={loading} bind:value={form.targetResolution} />
 {/snippet}
 
 <form class="flex min-h-full flex-col items-center justify-center gap-4" onsubmit={download}>
@@ -86,7 +97,7 @@
 		</div>
 	</div>
 	<div class="flex w-full flex-col items-center">
-		<DirectoryInput bind:value={form.outputDir} />
+		<DirectoryInput disabled={loading} bind:value={form.outputDir} />
 	</div>
 	<Button type="submit">Download</Button>
 </form>
