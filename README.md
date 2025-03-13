@@ -13,6 +13,8 @@ Currently this app is very limited and only allows you to choose the URL, output
 dwnld is powered by the excellent [wails](https://wails.io/) framework for building cross-platform desktop applications with Go and JavaScript.
 The frontend is powered by [Svelte/SvelteKit](https://svelte.dev/), with heavy use of [shadcn-svelte](https://next.shadcn-svelte.com/) for components.
 
+It is highly recommended to install [ffmpeg](https://www.ffmpeg.org/), or resolutions may be limited.
+
 ## Live Development
 
 To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
