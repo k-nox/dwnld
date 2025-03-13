@@ -22,5 +22,5 @@
 <Label for="dir" class="m-1">Output Directory</Label>
 <div class="flex w-1/2 rounded-md border border-input shadow-sm">
 	<Button variant="secondary" type="button" onclick={chooseDirectory}>Choose Directory</Button>
-	<Input id="dir" class="border-0 focus-visible:ring-0" readonly type="text" bind:value />
+	<Input id="dir" class="border-0 focus-visible:ring-0" required readonly type="text" bind:value />
 </div>

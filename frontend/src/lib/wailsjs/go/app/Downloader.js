@@ -6,6 +6,6 @@ export function ChooseDirectory() {
   return window['go']['app']['Downloader']['ChooseDirectory']();
 }
 
-export function Download(arg1, arg2, arg3) {
-  return window['go']['app']['Downloader']['Download'](arg1, arg2, arg3);
+export function Download(arg1) {
+  return window['go']['app']['Downloader']['Download'](arg1);
 }

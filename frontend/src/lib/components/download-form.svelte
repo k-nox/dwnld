@@ -5,17 +5,29 @@
 	import { Download } from '$lib/wailsjs/go/app/Downloader';
 	import { toast } from 'svelte-sonner';
 	import DirectoryInput from './directory-input.svelte';
-	import TemplatePopover from './template-popover.svelte';
+	import InfoPopover from './info-popover.svelte';
+	import TemplateInfo from './template-info.svelte';
+	import { app } from '$lib/wailsjs/go/models';
+	import ResolutionSelect from './resolution-select.svelte';
 
-	const form = $state({
+	// const form: app.Options = $state(
+	// 	new app.Options({ targetResolution: app.Resolution.RESOLUTION_1080 })
+	// );
+	const form: {
+		url: string;
+		outputDir: string;
+		outputTempl: string;
+		targetResolution: app.Resolution | undefined;
+	} = $state({
 		url: '',
+		outputDir: '',
 		outputTempl: '',
-		outputDir: ''
+		targetResolution: undefined
 	});
 
 	const download = async (e: SubmitEvent) => {
 		e.preventDefault();
-		toast.promise(Download(form.url, form.outputDir, form.outputTempl), {
+		toast.promise(Download(app.Options.createFrom(form)), {
 			loading: 'Downloading...',
 			success: () => {
 				form.url = '';
@@ -34,20 +46,43 @@
 	};
 </script>
 
+{#snippet urlInput()}
+	<Label for="url" class="m-1"
+		>URL<InfoPopover>Currently only single videos are supported.</InfoPopover></Label
+	>
+	<Input id="url" type="url" placeholder="video url" bind:value={form.url} required />
+{/snippet}
+
+{#snippet outputTemplateInput()}
+	<Label for="templ" class="m-1">Output Template<InfoPopover><TemplateInfo /></InfoPopover></Label>
+	<Input
+		id="templ"
+		type="text"
+		placeholder="%(title)s [%(id)s].%(ext)s"
+		bind:value={form.outputTempl}
+	/>
+{/snippet}
+
+{#snippet resolutionSelect()}
+	<Label class="m-1"
+		>Resolution<InfoPopover
+			>There's no guarantee the selected resolution will be available. This functions as an upper
+			limit for the available resolutions.</InfoPopover
+		></Label
+	>
+	<ResolutionSelect bind:value={form.targetResolution} />
+{/snippet}
+
 <form class="flex min-h-full flex-col items-center justify-center gap-4" onsubmit={download}>
-	<div class="flex w-full items-end justify-center gap-4">
-		<div class="w-1/3">
-			<Label for="url" class="m-1">URL</Label>
-			<Input id="url" type="url" placeholder="video url" bind:value={form.url} required />
+	<div class="flex w-full flex-wrap items-end justify-center gap-4">
+		<div class="min-w-96">
+			{@render urlInput()}
 		</div>
-		<div class="w-1/3">
-			<Label for="templ" class="m-1">Output Template<TemplatePopover /></Label>
-			<Input
-				id="templ"
-				type="text"
-				placeholder="%(title)s [%(id)s].%(ext)s"
-				bind:value={form.outputTempl}
-			/>
+		<div class="min-w-96">
+			{@render outputTemplateInput()}
+		</div>
+		<div class="min-w-96">
+			{@render resolutionSelect()}
 		</div>
 	</div>
 	<div class="flex w-full flex-col items-center">

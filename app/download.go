@@ -19,16 +19,21 @@ func (d *Downloader) ensureInstalled() {
 	ytdlp.MustInstall(d.ctx, &ytdlp.InstallOptions{})
 }
 
-func (d *Downloader) Download(url string, outputDir string, outputTempl string) error {
-	cmd := ytdlp.New().FormatSort("res,vcodec:h264,acodec:m4a")
-
-	if outputTempl == "" {
-		outputTempl = defaultOutputTemplate
+func (d *Downloader) Download(opts Options) error {
+	if !opts.TargetResoltion.valid() {
+		return fmt.Errorf("requested resolution %s is not allowed currently", opts.TargetResoltion)
 	}
 
-	cmd.Output(filepath.Join(outputDir, outputTempl))
+	format := fmt.Sprintf("res:%s,vcodec:h264,acodec:m4a", opts.TargetResoltion)
+	cmd := ytdlp.New().FormatSort(format)
 
-	_, err := cmd.Run(d.ctx, url)
+	if opts.OutputTempl == "" {
+		opts.OutputTempl = defaultOutputTemplate
+	}
+
+	cmd.Output(filepath.Join(opts.OutputDir, opts.OutputTempl))
+
+	_, err := cmd.Run(d.ctx, opts.URL)
 	if err != nil {
 		return err
 	}

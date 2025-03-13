@@ -3,7 +3,7 @@
 ## About
 
 This is a simple GUI wrapper around the [go-ytdlp](github.com/lrstanley/go-ytdlp) package, which itself is a wrapper for [yt-dlp](https://github.com/yt-dlp/yt-dlp).
-Currently this app is very limited and only allows you to choose the URL, output directory, and [output template](https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#output-template). It will default to the highest available resolution, with a preference towards h264 and m4a codecs for video and audio respectively.
+Currently this app is very limited and only allows you to choose the URL, output directory, preferred resolution, and [output template](https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#output-template). It has a preference towards h264 and m4a codecs for video and audio respectively.
 
 dwnld is powered by the excellent [wails](https://wails.io/) framework for building cross-platform desktop applications with Go and JavaScript.
 The frontend is powered by [Svelte/SvelteKit](https://svelte.dev/), with heavy use of [shadcn-svelte](https://next.shadcn-svelte.com/) for components.
