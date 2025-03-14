@@ -7,6 +7,11 @@
 	"frontend:build": "npm run build",
 	"frontend:dev:watcher": "npm run dev",
 	"frontend:dev:serverUrl": "auto",
+	"bindings": {
+		"ts_generation": {
+			"outputType": "interfaces"
+		}
+	},
 	"author": {
 		"name": "Lux Barker",
 		"email": "29106316+k-nox@users.noreply.github.com"

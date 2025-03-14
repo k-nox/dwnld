@@ -27,9 +27,9 @@ var Resolutions = []struct {
 
 type Options struct {
 	URL             string     `json:"url"`
-	OutputDir       string     `json:"outputDir"`
-	OutputTempl     string     `json:"outputTempl"`
-	TargetResoltion Resolution `json:"targetResolution"`
+	OutputDir       string     `json:"outputDir,omitempty"`
+	OutputTempl     string     `json:"outputTempl,omitempty"`
+	TargetResoltion Resolution `json:"targetResolution,omitempty"`
 }
 
 func (res Resolution) valid() bool {

@@ -10,16 +10,8 @@
 	import { app } from '$lib/wailsjs/go/models';
 	import ResolutionSelect from './resolution-select.svelte';
 
-	const form: {
-		url: string;
-		outputDir: string;
-		outputTempl: string;
-		targetResolution: app.Resolution | undefined;
-	} = $state({
-		url: '',
-		outputDir: '',
-		outputTempl: '',
-		targetResolution: undefined
+	const form: app.Options = $state({
+		url: ''
 	});
 
 	let loading = $state(false);
@@ -27,7 +19,7 @@
 	const download = async (e: SubmitEvent) => {
 		e.preventDefault();
 		loading = true;
-		toast.promise(Download(app.Options.createFrom(form)), {
+		toast.promise(Download(form), {
 			loading: 'Downloading...',
 			success: () => {
 				form.url = '';

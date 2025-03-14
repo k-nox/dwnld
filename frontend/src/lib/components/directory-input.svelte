@@ -5,7 +5,8 @@
 	import { ChooseDirectory } from '$lib/wailsjs/go/app/Downloader';
 	import { LogDebug } from '$lib/wailsjs/runtime/runtime';
 
-	let { value = $bindable(), disabled }: { value: string; disabled: boolean } = $props();
+	let { value = $bindable(), disabled }: { value: string | undefined; disabled: boolean } =
+		$props();
 	const chooseDirectory = async () => {
 		try {
 			value = await ChooseDirectory();
