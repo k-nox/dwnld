@@ -1,4 +1,4 @@
-package download
+package config
 
 import "slices"
 
@@ -25,14 +25,7 @@ var Resolutions = []struct {
 	{Resolution360, "RESOLUTION_360"},
 }
 
-type Options struct {
-	URL             string     `json:"url"`
-	OutputDir       string     `json:"outputDir,omitempty"`
-	OutputTempl     string     `json:"outputTempl,omitempty"`
-	TargetResoltion Resolution `json:"targetResolution,omitempty"`
-}
-
-func (res Resolution) valid() bool {
+func (res Resolution) Valid() bool {
 	return slices.ContainsFunc(Resolutions, func(r struct {
 		Value  Resolution
 		TSName string

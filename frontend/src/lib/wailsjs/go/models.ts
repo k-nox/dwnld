@@ -1,4 +1,4 @@
-export namespace download {
+export namespace config {
 	
 	export enum Resolution {
 	    RESOLUTION_2160 = "2160",
@@ -8,10 +8,9 @@ export namespace download {
 	    RESOLUTION_480 = "480",
 	    RESOLUTION_360 = "360",
 	}
-	export interface Options {
-	    url: string;
-	    outputDir?: string;
-	    outputTempl?: string;
+	export interface DownloadOptions {
+	    outputDirectory?: string;
+	    outputTemplate?: string;
 	    targetResolution?: Resolution;
 	}
 

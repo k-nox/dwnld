@@ -7,22 +7,21 @@
 	import DirectoryInput from './directory-input.svelte';
 	import InfoPopover from './info-popover.svelte';
 	import TemplateInfo from './template-info.svelte';
-	import { download } from '$lib/wailsjs/go/models';
+	import { config } from '$lib/wailsjs/go/models';
 	import ResolutionSelect from './resolution-select.svelte';
 
-	const form: download.Options = $state({
-		url: ''
-	});
+	const form: config.DownloadOptions = $state({});
+	let url = $state('');
 
 	let loading = $state(false);
 
 	const downloadHandler = async (e: SubmitEvent) => {
 		e.preventDefault();
 		loading = true;
-		toast.promise(Download(form), {
+		toast.promise(Download(url, form), {
 			loading: 'Downloading...',
 			success: () => {
-				form.url = '';
+				url = '';
 				return 'Video successfully downloaded.';
 			},
 			error: (e: unknown) => {
@@ -45,14 +44,7 @@
 	<Label for="url" class="m-1"
 		>URL<InfoPopover>Currently only single videos are supported.</InfoPopover></Label
 	>
-	<Input
-		id="url"
-		type="url"
-		placeholder="video url"
-		bind:value={form.url}
-		required
-		disabled={loading}
-	/>
+	<Input id="url" type="url" placeholder="video url" bind:value={url} required disabled={loading} />
 {/snippet}
 
 {#snippet outputTemplateInput()}
@@ -62,7 +54,7 @@
 		type="text"
 		placeholder="%(title)s [%(id)s].%(ext)s"
 		disabled={loading}
-		bind:value={form.outputTempl}
+		bind:value={form.outputTemplate}
 	/>
 {/snippet}
 
@@ -89,7 +81,7 @@
 		</div>
 	</div>
 	<div class="flex w-full flex-col items-center">
-		<DirectoryInput disabled={loading} bind:value={form.outputDir} />
+		<DirectoryInput disabled={loading} bind:value={form.outputDirectory} />
 	</div>
 	<Button type="submit">Download</Button>
 </form>

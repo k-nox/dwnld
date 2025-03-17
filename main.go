@@ -4,7 +4,7 @@ import (
 	"embed"
 
 	"github.com/k-nox/dwnld/app"
-	"github.com/k-nox/dwnld/app/download"
+	"github.com/k-nox/dwnld/app/config"
 	"github.com/k-nox/dwnld/app/theme"
 
 	"github.com/wailsapp/wails/v2"
@@ -36,7 +36,7 @@ func main() {
 			a.Theme,
 		},
 		EnumBind: []interface{}{
-			download.Resolutions,
+			config.Resolutions,
 		},
 		EnableDefaultContextMenu: true,
 		Mac: &mac.Options{

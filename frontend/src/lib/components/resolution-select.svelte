@@ -1,11 +1,11 @@
 <script lang="ts">
 	import * as Select from '$lib/components/ui/select';
-	import { download } from '$lib/wailsjs/go/models';
+	import { config } from '$lib/wailsjs/go/models';
 
 	let {
 		value = $bindable(),
 		disabled
-	}: { value: download.Resolution | undefined; disabled: boolean } = $props();
+	}: { value: config.Resolution | undefined; disabled: boolean } = $props();
 </script>
 
 <Select.Root type="single" bind:value name="resolution" required {disabled}>
@@ -13,7 +13,7 @@
 		{value ? value : 'Select a resolution.'}
 	</Select.Trigger>
 	<Select.Content>
-		{#each Object.values(download.Resolution) as res}
+		{#each Object.values(config.Resolution) as res}
 			<Select.Item value={res}>{res}</Select.Item>
 		{/each}
 	</Select.Content>

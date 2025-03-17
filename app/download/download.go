@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"path/filepath"
 
+	"github.com/k-nox/dwnld/app/config"
 	"github.com/lrstanley/go-ytdlp"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -12,7 +13,8 @@ import (
 const defaultOutputTemplate = "%(title)s [%(id)s].%(ext)s"
 
 type Downloader struct {
-	ctx context.Context
+	ctx         context.Context
+	defaultOpts *config.DownloadOptions
 }
 
 func Startup(ctx context.Context, d *Downloader) {
@@ -24,21 +26,21 @@ func (d *Downloader) ensureInstalled() {
 	ytdlp.MustInstall(d.ctx, &ytdlp.InstallOptions{})
 }
 
-func (d *Downloader) Download(opts Options) error {
-	if !opts.TargetResoltion.valid() {
+func (d *Downloader) Download(url string, opts config.DownloadOptions) error {
+	if !opts.TargetResoltion.Valid() {
 		return fmt.Errorf("requested resolution %s is not allowed currently", opts.TargetResoltion)
 	}
 
 	format := fmt.Sprintf("res:%s,vcodec:h264,acodec:m4a", opts.TargetResoltion)
 	cmd := ytdlp.New().FormatSort(format)
 
-	if opts.OutputTempl == "" {
-		opts.OutputTempl = defaultOutputTemplate
+	if opts.OutputTemplate == "" {
+		opts.OutputTemplate = defaultOutputTemplate
 	}
 
-	cmd.Output(filepath.Join(opts.OutputDir, opts.OutputTempl))
+	cmd.Output(filepath.Join(opts.OutputDirectory, opts.OutputTemplate))
 
-	_, err := cmd.Run(d.ctx, opts.URL)
+	_, err := cmd.Run(d.ctx, url)
 	if err != nil {
 		return err
 	}
