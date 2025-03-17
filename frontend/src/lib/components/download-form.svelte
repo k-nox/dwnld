@@ -2,21 +2,21 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import { Download } from '$lib/wailsjs/go/app/Downloader';
+	import { Download } from '$lib/wailsjs/go/download/Downloader';
 	import { toast } from 'svelte-sonner';
 	import DirectoryInput from './directory-input.svelte';
 	import InfoPopover from './info-popover.svelte';
 	import TemplateInfo from './template-info.svelte';
-	import { app } from '$lib/wailsjs/go/models';
+	import { download } from '$lib/wailsjs/go/models';
 	import ResolutionSelect from './resolution-select.svelte';
 
-	const form: app.Options = $state({
+	const form: download.Options = $state({
 		url: ''
 	});
 
 	let loading = $state(false);
 
-	const download = async (e: SubmitEvent) => {
+	const downloadHandler = async (e: SubmitEvent) => {
 		e.preventDefault();
 		loading = true;
 		toast.promise(Download(form), {
@@ -76,7 +76,7 @@
 	<ResolutionSelect disabled={loading} bind:value={form.targetResolution} />
 {/snippet}
 
-<form class="flex min-h-full flex-col items-center justify-center gap-4" onsubmit={download}>
+<form class="flex min-h-full flex-col items-center justify-center gap-4" onsubmit={downloadHandler}>
 	<div class="flex w-full flex-wrap items-end justify-center gap-4">
 		<div class="min-w-96">
 			{@render urlInput()}

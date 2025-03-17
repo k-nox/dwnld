@@ -24,26 +24,30 @@ var (
 )
 
 type Settings struct {
-	Ctx context.Context
+	ctx context.Context
+}
+
+func Startup(ctx context.Context, s *Settings) {
+	s.ctx = ctx
 }
 
 func (s *Settings) DarkMode() {
 	if goruntime.GOOS == "windows" {
-		runtime.WindowSetDarkTheme(s.Ctx)
+		runtime.WindowSetDarkTheme(s.ctx)
 	}
-	runtime.WindowSetBackgroundColour(s.Ctx, DarkBackground.R, DarkBackground.G, DarkBackground.B, DarkBackground.A)
+	runtime.WindowSetBackgroundColour(s.ctx, DarkBackground.R, DarkBackground.G, DarkBackground.B, DarkBackground.A)
 }
 
 func (s *Settings) LightMode() {
 	if goruntime.GOOS == "windows" {
-		runtime.WindowSetLightTheme(s.Ctx)
+		runtime.WindowSetLightTheme(s.ctx)
 	}
-	runtime.WindowSetBackgroundColour(s.Ctx, LightBackground.R, LightBackground.G, LightBackground.B, LightBackground.A)
+	runtime.WindowSetBackgroundColour(s.ctx, LightBackground.R, LightBackground.G, LightBackground.B, LightBackground.A)
 }
 
 // only available for Windows
 func (s *Settings) ResetMode() {
 	if goruntime.GOOS == "windows" {
-		runtime.WindowSetSystemDefaultTheme(s.Ctx)
+		runtime.WindowSetSystemDefaultTheme(s.ctx)
 	}
 }

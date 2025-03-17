@@ -2,7 +2,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import { Button } from '$lib/components/ui/button';
-	import { ChooseDirectory } from '$lib/wailsjs/go/app/Downloader';
+	import { ChooseDirectory } from '$lib/wailsjs/go/download/Downloader';
 	import { LogDebug } from '$lib/wailsjs/runtime/runtime';
 
 	let { value = $bindable(), disabled }: { value: string | undefined; disabled: boolean } =

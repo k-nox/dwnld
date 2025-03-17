@@ -3,25 +3,27 @@ package app
 import (
 	"context"
 
+	"github.com/k-nox/dwnld/app/download"
 	"github.com/k-nox/dwnld/app/theme"
 )
 
 type App struct {
 	ctx       context.Context
-	Downloder *Downloader
-	Settings  *theme.Settings
+	Downloder *download.Downloader
+	Theme     *theme.Settings
 }
 
 func New() *App {
 	return &App{
-		Downloder: &Downloader{},
-		Settings:  &theme.Settings{},
+		Theme:     &theme.Settings{},
+		Downloder: &download.Downloader{},
 	}
 }
 
-func (a *App) Startup(ctx context.Context) {
-	a.ctx = ctx
-	a.Settings.Ctx = ctx
-	a.Downloder.ctx = ctx
-	a.Downloder.ensureInstalled()
+func Startup(app *App) func(context.Context) {
+	return func(ctx context.Context) {
+		app.ctx = ctx
+		theme.Startup(ctx, app.Theme)
+		download.Startup(ctx, app.Downloder)
+	}
 }

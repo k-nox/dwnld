@@ -1,4 +1,4 @@
-package app
+package download
 
 import (
 	"context"
@@ -13,6 +13,11 @@ const defaultOutputTemplate = "%(title)s [%(id)s].%(ext)s"
 
 type Downloader struct {
 	ctx context.Context
+}
+
+func Startup(ctx context.Context, d *Downloader) {
+	d.ctx = ctx
+	d.ensureInstalled()
 }
 
 func (d *Downloader) ensureInstalled() {

@@ -1,4 +1,4 @@
-export namespace app {
+export namespace download {
 	
 	export enum Resolution {
 	    RESOLUTION_2160 = "2160",
