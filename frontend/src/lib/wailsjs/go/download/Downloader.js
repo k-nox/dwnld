@@ -6,6 +6,10 @@ export function ChooseDirectory() {
   return window['go']['download']['Downloader']['ChooseDirectory']();
 }
 
+export function Defaults() {
+  return window['go']['download']['Downloader']['Defaults']();
+}
+
 export function Download(arg1, arg2) {
   return window['go']['download']['Downloader']['Download'](arg1, arg2);
 }

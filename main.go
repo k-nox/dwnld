@@ -19,10 +19,14 @@ var assets embed.FS
 
 func main() {
 	// Create an instance of the a structure
-	a := app.New()
+	a, err := app.New("config.yaml")
+	if err != nil {
+		// TODO: handle
+		panic(err)
+	}
 
 	// Create application with options
-	err := wails.Run(&options.App{
+	err = wails.Run(&options.App{
 		Title:  "dwnld",
 		Width:  1024,
 		Height: 768,
@@ -32,8 +36,9 @@ func main() {
 		BackgroundColour: theme.DarkBackground,
 		OnStartup:        app.Startup(a),
 		Bind: []interface{}{
-			a.Downloder,
+			a.Downloader,
 			a.Theme,
+			a.ConfigManager,
 		},
 		EnumBind: []interface{}{
 			config.Resolutions,

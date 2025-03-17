@@ -8,10 +8,13 @@ export namespace config {
 	    RESOLUTION_480 = "480",
 	    RESOLUTION_360 = "360",
 	}
-	export interface DownloadOptions {
+	export interface Download {
 	    outputDirectory?: string;
 	    outputTemplate?: string;
 	    targetResolution?: Resolution;
+	}
+	export interface Settings {
+	    download: Download;
 	}
 
 }

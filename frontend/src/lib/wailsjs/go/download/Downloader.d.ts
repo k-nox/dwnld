@@ -4,4 +4,6 @@ import {config} from '../models';
 
 export function ChooseDirectory():Promise<string>;
 
-export function Download(arg1:string,arg2:config.DownloadOptions):Promise<void>;
+export function Defaults():Promise<config.Download>;
+
+export function Download(arg1:string,arg2:config.Download):Promise<void>;

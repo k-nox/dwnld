@@ -1,7 +1,7 @@
 package config
 
-type DownloadOptions struct {
-	OutputDirectory string     `json:"outputDirectory,omitempty"`
-	OutputTemplate  string     `json:"outputTemplate,omitempty"`
-	TargetResoltion Resolution `json:"targetResolution,omitempty"`
+type Download struct {
+	OutputDirectory string     `json:"outputDirectory,omitempty" koanf:"outputDirectory"`
+	OutputTemplate  string     `json:"outputTemplate,omitempty" koanf:"outputTemplate"`
+	TargetResoltion Resolution `json:"targetResolution,omitempty" koanf:"targetResolution"`
 }

@@ -10,7 +10,9 @@
 	import { config } from '$lib/wailsjs/go/models';
 	import ResolutionSelect from './resolution-select.svelte';
 
-	const form: config.DownloadOptions = $state({});
+	let { defaults }: { defaults: config.Download } = $props();
+
+	const form: config.Download = $state({ ...defaults });
 	let url = $state('');
 
 	let loading = $state(false);

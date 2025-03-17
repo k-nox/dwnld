@@ -14,11 +14,12 @@ const defaultOutputTemplate = "%(title)s [%(id)s].%(ext)s"
 
 type Downloader struct {
 	ctx         context.Context
-	defaultOpts *config.DownloadOptions
+	defaultOpts config.Download
 }
 
-func Startup(ctx context.Context, d *Downloader) {
+func Startup(ctx context.Context, d *Downloader, opts config.Download) {
 	d.ctx = ctx
+	d.defaultOpts = opts
 	d.ensureInstalled()
 }
 
@@ -26,7 +27,11 @@ func (d *Downloader) ensureInstalled() {
 	ytdlp.MustInstall(d.ctx, &ytdlp.InstallOptions{})
 }
 
-func (d *Downloader) Download(url string, opts config.DownloadOptions) error {
+func (d *Downloader) Defaults() config.Download {
+	return d.defaultOpts
+}
+
+func (d *Downloader) Download(url string, opts config.Download) error {
 	if !opts.TargetResoltion.Valid() {
 		return fmt.Errorf("requested resolution %s is not allowed currently", opts.TargetResoltion)
 	}
