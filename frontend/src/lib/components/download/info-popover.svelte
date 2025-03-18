@@ -1,8 +1,8 @@
 <script lang="ts">
-	import * as Popover from '$lib/components/ui/popover';
-	import Info from 'lucide-svelte/icons/info';
-	import { buttonVariants } from './ui/button';
 	import type { Snippet } from 'svelte';
+	import Info from 'lucide-svelte/icons/info';
+	import * as Popover from '$lib/components/ui/popover';
+	import { buttonVariants } from '$lib/components/ui/button';
 
 	let { children }: { children: Snippet } = $props();
 </script>

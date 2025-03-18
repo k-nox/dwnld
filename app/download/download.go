@@ -57,6 +57,7 @@ func (d *Downloader) ChooseDirectory() (string, error) {
 	dir, err := runtime.OpenDirectoryDialog(d.ctx, runtime.OpenDialogOptions{
 		Title:                "Choose directory to save downloads",
 		CanCreateDirectories: true,
+		DefaultDirectory:     d.defaultOpts.OutputDirectory,
 	})
 	if err != nil {
 		return "", fmt.Errorf("error choosing directory: %w", err)
