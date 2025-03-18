@@ -67,11 +67,11 @@
 			>, or leave the field as is to use the default.
 		</div>
 	{/snippet}
-	<Label for="outputTemplate" {info}>Output Template</Label>
+	<Label for="outputTemplate" class="" {info}>Output Template</Label>
 	<Input
 		id="outputTemplate"
 		type="text"
-		placeholder="%(title)s [%(id)s].%(ext)s"
+		placeholder={defaults.outputTemplate || '%(title)s [%(id)s].%(ext)s'}
 		disabled={loading}
 		bind:value={form.outputTemplate}
 	/>
@@ -83,7 +83,11 @@
 		for the available resolutions.
 	{/snippet}
 	<Label {info}>Resolution</Label>
-	<ResolutionSelect disabled={loading} bind:value={form.targetResolution} />
+	<ResolutionSelect
+		disabled={loading}
+		bind:value={form.targetResolution}
+		defaultValue={defaults.targetResolution}
+	/>
 {/snippet}
 
 {#snippet directoryInput()}
