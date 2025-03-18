@@ -14,6 +14,8 @@
 
 	const form: config.Download = $state({ ...defaults });
 	let url = $state('');
+	let dir = $state('');
+	$inspect(dir);
 
 	let loading = $state(false);
 
@@ -43,14 +45,12 @@
 </script>
 
 {#snippet urlInput()}
-	<Label for="url" class="m-1"
-		>URL<InfoPopover>Currently only single videos are supported.</InfoPopover></Label
-	>
+	<Label for="url">URL<InfoPopover>Currently only single videos are supported.</InfoPopover></Label>
 	<Input id="url" type="url" placeholder="video url" bind:value={url} required disabled={loading} />
 {/snippet}
 
 {#snippet outputTemplateInput()}
-	<Label for="templ" class="m-1">Output Template<InfoPopover><TemplateInfo /></InfoPopover></Label>
+	<Label for="templ">Output Template<InfoPopover><TemplateInfo /></InfoPopover></Label>
 	<Input
 		id="templ"
 		type="text"
@@ -61,7 +61,7 @@
 {/snippet}
 
 {#snippet resolutionSelect()}
-	<Label class="m-1"
+	<Label
 		>Resolution<InfoPopover
 			>There's no guarantee the selected resolution will be available. This functions as an upper
 			limit for the available resolutions.</InfoPopover

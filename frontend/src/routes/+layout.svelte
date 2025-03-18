@@ -8,11 +8,13 @@
 
 <ModeWatcher />
 <Toaster richColors />
-<div class="grid h-screen grid-cols-12 grid-rows-12">
-	<header class="col-span-12 row-span-1 flex flex-row items-center justify-end p-6">
-		<ThemeToggle />
+<div class="flex h-screen flex-col">
+	<header class="flex flex-row items-center justify-end p-6" style="--wails-draggable:drag">
+		<div style="--wails-draggable:nodrag">
+			<ThemeToggle />
+		</div>
 	</header>
-	<main class="col-span-12 row-span-11">
+	<main class="h-full">
 		{@render children()}
 	</main>
 </div>
