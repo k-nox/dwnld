@@ -44,6 +44,7 @@ func main() {
 			config.Resolutions,
 		},
 		EnableDefaultContextMenu: true,
+		Menu:                     app.Menu(a),
 		Mac: &mac.Options{
 			TitleBar: mac.TitleBarHiddenInset(),
 			About: &mac.AboutInfo{
