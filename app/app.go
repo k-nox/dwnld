@@ -79,8 +79,5 @@ func (a *App) about() {
 }
 
 func (a *App) settings() {
-	runtime.MessageDialog(a.ctx, runtime.MessageDialogOptions{
-		Type:    runtime.InfoDialog,
-		Message: "This will be the settings",
-	})
+	runtime.EventsEmit(a.ctx, "openSettings")
 }
