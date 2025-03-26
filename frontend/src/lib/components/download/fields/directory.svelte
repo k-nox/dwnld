@@ -4,14 +4,16 @@
 
 	import { ChooseDirectory } from '$lib/wailsjs/go/download/Downloader';
 	import { LogDebug } from '$lib/wailsjs/runtime/runtime';
+	import type { LabeledFieldProps } from './types';
+	import type { config } from '$lib/wailsjs/go/models';
+	import Label from '../label.svelte';
 
-	interface Props {
-		value?: string;
-		placeholder?: string;
-		disabled: boolean;
-	}
-
-	let { value = $bindable(), disabled, placeholder }: Props = $props();
+	let {
+		value = $bindable(),
+		disabled,
+		defaultValue,
+		label
+	}: LabeledFieldProps<config.Download['outputDirectory']> = $props();
 	const chooseDirectory = async () => {
 		try {
 			value = await ChooseDirectory();
@@ -25,16 +27,17 @@
 	};
 </script>
 
+<Label for={label}>Output Directory</Label>
 <div class="flex rounded-md border border-input shadow-sm">
-	<Button variant="secondary" type="button" onclick={chooseDirectory} {disabled}
-		>Choose Directory</Button
-	>
+	<Button variant="secondary" type="button" onclick={chooseDirectory} {disabled}>
+		Choose Directory
+	</Button>
 	<Input
-		id="dir"
+		id={label}
 		class="border-0 focus-visible:ring-0"
 		required
 		readonly
-		{placeholder}
+		placeholder={defaultValue}
 		{disabled}
 		type="text"
 		bind:value

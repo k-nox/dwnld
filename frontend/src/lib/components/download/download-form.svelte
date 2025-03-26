@@ -1,16 +1,14 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
 	import { toast } from 'svelte-sonner';
 
 	import { Download } from '$lib/wailsjs/go/download/Downloader';
 	import { config } from '$lib/wailsjs/go/models';
 
-	import Label from './label.svelte';
-	import DirectoryInput from './directory-input.svelte';
-	import ResolutionSelect from './resolution-select.svelte';
-	import { BrowserOpenURL } from '$lib/wailsjs/runtime/runtime';
-	import type { MouseEventHandler } from 'svelte/elements';
+	import Resolution from './fields/resolution.svelte';
+	import Url from './fields/url.svelte';
+	import Directory from './fields/directory.svelte';
+	import OutputTemplate from './fields/outputTemplate.svelte';
 
 	let { defaults }: { defaults: config.Download } = $props();
 
@@ -42,76 +40,35 @@
 			}
 		});
 	};
-
-	const handleOutsideClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
-		e.preventDefault();
-		BrowserOpenURL(e.currentTarget.href);
-	};
 </script>
-
-{#snippet urlInput()}
-	{#snippet info()}
-		Accepts both single video and playlist URLs.
-	{/snippet}
-	<Label for="url" {info}>URL</Label>
-	<Input id="url" type="url" placeholder="video url" bind:value={url} required disabled={loading} />
-{/snippet}
-
-{#snippet outputTemplateInput()}
-	{#snippet info()}
-		<div>
-			For details and examples of acceptable formats, check out <a
-				href="https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#output-template"
-				class="underline underline-offset-4"
-				onclick={handleOutsideClick}>yt-dlp's docs</a
-			>, or leave the field as is to use the default.
-		</div>
-	{/snippet}
-	<Label for="outputTemplate" class="" {info}>Output Template</Label>
-	<Input
-		id="outputTemplate"
-		type="text"
-		placeholder={defaults.outputTemplate || '%(title)s [%(id)s].%(ext)s'}
-		disabled={loading}
-		bind:value={form.outputTemplate}
-	/>
-{/snippet}
-
-{#snippet resolutionSelect()}
-	{#snippet info()}
-		There's no guarantee the selected resolution will be available. This functions as an upper limit
-		for the available resolutions.
-	{/snippet}
-	<Label {info}>Resolution</Label>
-	<ResolutionSelect
-		disabled={loading}
-		bind:value={form.targetResolution}
-		defaultValue={defaults.targetResolution}
-	/>
-{/snippet}
-
-{#snippet directoryInput()}
-	<Label for="outputDirectory">Output Directory</Label>
-	<DirectoryInput
-		disabled={loading}
-		bind:value={form.outputDirectory}
-		placeholder={defaults.outputDirectory}
-	/>
-{/snippet}
 
 <form class="flex min-h-full flex-col items-center justify-center gap-4" onsubmit={downloadHandler}>
 	<div class="flex w-full flex-wrap items-end justify-center gap-4">
 		<div class="basis-1/4">
-			{@render urlInput()}
+			<Url bind:value={url} disabled={loading} label="url" />
 		</div>
 		<div class="basis-1/4">
-			{@render outputTemplateInput()}
+			<OutputTemplate
+				bind:value={form.outputTemplate}
+				disabled={loading}
+				defaultValue={defaults.outputTemplate}
+				label="outputTemplate"
+			/>
 		</div>
 		<div class="basis-1/4">
-			{@render resolutionSelect()}
+			<Resolution
+				disabled={loading}
+				bind:value={form.targetResolution}
+				defaultValue={defaults.targetResolution}
+			/>
 		</div>
 		<div class="basis-1/2">
-			{@render directoryInput()}
+			<Directory
+				bind:value={form.outputDirectory}
+				disabled={loading}
+				defaultValue={defaults.outputDirectory}
+				label="outputDirectory"
+			/>
 		</div>
 	</div>
 	<Button type="submit" disabled={loading}>Download</Button>
