@@ -11,9 +11,11 @@
 	let { children, info, ...props }: Props = $props();
 </script>
 
-<Label {...props}>
+<Label {...props} class="flex items-start gap-x-3 pb-1">
 	{@render children()}
 	{#if info}
-		<InfoPopover>{@render info()}</InfoPopover>
+		<span class="flex h-[1lh] items-center">
+			<InfoPopover>{@render info()}</InfoPopover>
+		</span>
 	{/if}
 </Label>

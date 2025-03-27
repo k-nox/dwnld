@@ -8,7 +8,9 @@
 </script>
 
 <Popover.Root>
-	<Popover.Trigger class={buttonVariants({ variant: 'ghost', size: 'icon' })}>
+	<Popover.Trigger
+		class={[buttonVariants({ variant: 'ghost', size: 'icon' }), 'h-[1.1lh] w-[1.1lh]']}
+	>
 		<Info />
 		<span class="sr-only">More informtation on output formats</span>
 	</Popover.Trigger>

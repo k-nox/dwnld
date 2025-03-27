@@ -7,6 +7,7 @@
 	import type { LabeledFieldProps } from './types';
 	import type { config } from '$lib/wailsjs/go/models';
 	import Label from '../label.svelte';
+	import { inputClassNames } from '$lib/utils';
 
 	let {
 		value = $bindable(),
@@ -14,6 +15,9 @@
 		defaultValue,
 		label
 	}: LabeledFieldProps<config.Download['outputDirectory']> = $props();
+
+	let classes = $derived(inputClassNames(value, defaultValue));
+
 	const chooseDirectory = async () => {
 		try {
 			value = await ChooseDirectory();
@@ -27,19 +31,21 @@
 	};
 </script>
 
-<Label for={label}>Output Directory</Label>
-<div class="flex rounded-md border border-input shadow-sm">
-	<Button variant="secondary" type="button" onclick={chooseDirectory} {disabled}>
-		Choose Directory
-	</Button>
-	<Input
-		id={label}
-		class="border-0 focus-visible:ring-0"
-		required
-		readonly
-		placeholder={defaultValue}
-		{disabled}
-		type="text"
-		bind:value
-	/>
+<div>
+	<Label for={label}>Output Directory</Label>
+	<div class={['flex rounded-md border border-input shadow-sm', classes]}>
+		<Button variant="secondary" type="button" onclick={chooseDirectory} {disabled}>
+			Choose Directory
+		</Button>
+		<Input
+			id={label}
+			class="border-0 focus-visible:ring-0"
+			required
+			readonly
+			placeholder={defaultValue}
+			{disabled}
+			type="text"
+			bind:value
+		/>
+	</div>
 </div>

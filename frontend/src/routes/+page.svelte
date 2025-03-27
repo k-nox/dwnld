@@ -19,7 +19,7 @@
 	});
 </script>
 
-<Settings bind:isOpen={settingsOpen} />
+<Settings bind:isOpen={settingsOpen} {defaults} />
 <div class="h-full">
 	<DownloadForm {defaults} />
 </div>
