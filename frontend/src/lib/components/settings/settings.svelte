@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as Dialog from '$lib/components/ui/dialog';
+	import { Button } from '$lib/components/ui/button';
 	import type { config } from '$lib/wailsjs/go/models';
 	import Directory from '../download/fields/directory.svelte';
 	import OutputTemplate from '../download/fields/outputTemplate.svelte';
@@ -11,6 +12,16 @@
 	let { isOpen = $bindable(), defaults }: Props = $props();
 
 	let form = $state({ ...defaults });
+
+	let isChanged = $derived.by(() => {
+		let key: keyof config.Download;
+		for (key in defaults) {
+			if (form[key] !== defaults[key]) {
+				return true;
+			}
+		}
+		return false;
+	});
 
 	const updateDefaults = async (e: SubmitEvent) => {
 		e.preventDefault();
@@ -42,6 +53,7 @@
 					disabled={false}
 					label="defaultOutputDirectory"
 				/>
+				<Button type="submit" class="self-center" disabled={!isChanged}>Save Defaults</Button>
 			</div>
 		</form>
 	</Dialog.Content>
