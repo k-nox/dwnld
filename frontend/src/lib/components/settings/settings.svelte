@@ -5,6 +5,10 @@
 	import Directory from '../download/fields/directory.svelte';
 	import OutputTemplate from '../download/fields/outputTemplate.svelte';
 	import Resolution from '../download/fields/resolution.svelte';
+	import { Update } from '$lib/wailsjs/go/config/Manager';
+	import { toast } from 'svelte-sonner';
+	import { WindowReload } from '$lib/wailsjs/runtime/runtime';
+
 	interface Props {
 		isOpen: boolean;
 		defaults: config.Download;
@@ -25,7 +29,19 @@
 
 	const updateDefaults = async (e: SubmitEvent) => {
 		e.preventDefault();
-		console.log('update defaults here');
+		try {
+			await Update({ download: form });
+			// TODO: this doesn't feel like the "correct" way to do this
+			WindowReload();
+		} catch (e: unknown) {
+			let msg = '';
+			if (typeof e === 'string') {
+				msg = e;
+			} else if (e instanceof Error) {
+				msg = e.message;
+			}
+			toast.error(msg);
+		}
 	};
 </script>
 

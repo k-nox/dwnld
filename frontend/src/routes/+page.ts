@@ -1,8 +1,9 @@
-import { Defaults } from '$lib/wailsjs/go/download/Downloader';
+import { Load } from '$lib/wailsjs/go/config/Manager';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async () => {
+export const load: PageLoad = async ({ depends }) => {
+	depends('app:defaults');
 	return {
-		defaults: await Defaults()
+		defaults: await Load()
 	};
 };
