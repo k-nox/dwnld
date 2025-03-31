@@ -3,7 +3,7 @@
 	import Moon from 'lucide-svelte/icons/moon';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { setMode, resetMode } from 'mode-watcher';
-	import { DarkMode, LightMode, ResetMode } from '$lib/wailsjs/go/theme/Settings';
+	import { DarkMode, LightMode, ResetMode } from '$lib/wailsjs/go/app/App';
 	import { buttonVariants } from '$lib/components/ui/button';
 
 	const handleLight = async () => {

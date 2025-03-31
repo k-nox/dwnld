@@ -15,6 +15,7 @@ type Manager struct {
 	fileProvider *file.File
 	yamlParser   *yaml.YAML
 	filePath     string
+	settings     *Settings
 }
 
 type Settings struct {
@@ -39,35 +40,29 @@ func New(configFilePath string) (*Manager, error) {
 	}, nil
 }
 
-func (m *Manager) Load() (Settings, error) {
-	defaults := defaultSettings()
-	if err := m.conf.Load(structs.Provider(defaults, "koanf"), nil); err != nil {
-		return defaults, fmt.Errorf("error loading default settings: %w", err)
+func (m *Manager) Startup() error {
+	loaded, err := m.load()
+	if err != nil {
+		return err
 	}
+	m.settings = loaded
+	return nil
+}
 
-	if err := m.conf.Load(m.fileProvider, m.yamlParser); err != nil {
-		return defaults, fmt.Errorf("error loading config file: %w", err)
-	}
-
-	var out Settings
-	if err := m.conf.Unmarshal("", &out); err != nil {
-		return out, fmt.Errorf("error unmarshaling config: %w", err)
-	}
-
-	if out.Download.OutputDirectory == "" {
-		defaultDir, err := defaultDownloadDirectory()
-		if err != nil {
-			return out, fmt.Errorf("error finding default download directory: %w", err)
-		}
-		out.Download.OutputDirectory = defaultDir
-	}
-	return out, nil
+func (m *Manager) Settings() *Settings {
+	return m.settings
 }
 
 func (m *Manager) Update(updated Settings) error {
 	if err := m.conf.Load(structs.Provider(updated, "koanf"), nil); err != nil {
 		return fmt.Errorf("error updating settings: %w", err)
 	}
+
+	var merged Settings
+	if err := m.conf.Unmarshal("", &merged); err != nil {
+		return fmt.Errorf("error unmarshaling config: %w", err)
+	}
+
 	bytes, err := m.conf.Marshal(m.yamlParser)
 	if err != nil {
 		return fmt.Errorf("error updating settings: %w", err)
@@ -78,5 +73,32 @@ func (m *Manager) Update(updated Settings) error {
 		return fmt.Errorf("error writing config file: %w", err)
 	}
 
+	m.settings = &merged
+
 	return nil
+}
+
+func (m *Manager) load() (*Settings, error) {
+	defaults := defaultSettings()
+	if err := m.conf.Load(structs.Provider(defaults, "koanf"), nil); err != nil {
+		return nil, fmt.Errorf("error loading default settings: %w", err)
+	}
+
+	if err := m.conf.Load(m.fileProvider, m.yamlParser); err != nil {
+		return nil, fmt.Errorf("error loading config file: %w", err)
+	}
+
+	var out Settings
+	if err := m.conf.Unmarshal("", &out); err != nil {
+		return nil, fmt.Errorf("error unmarshaling config: %w", err)
+	}
+
+	if out.Download.OutputDirectory == "" {
+		defaultDir, err := defaultDownloadDirectory()
+		if err != nil {
+			return nil, fmt.Errorf("error finding default download directory: %w", err)
+		}
+		out.Download.OutputDirectory = defaultDir
+	}
+	return &out, nil
 }

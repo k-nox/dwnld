@@ -5,9 +5,9 @@
 	import Directory from '../download/fields/directory.svelte';
 	import OutputTemplate from '../download/fields/outputTemplate.svelte';
 	import Resolution from '../download/fields/resolution.svelte';
-	import { Update } from '$lib/wailsjs/go/config/Manager';
 	import { toast } from 'svelte-sonner';
 	import { WindowReload } from '$lib/wailsjs/runtime/runtime';
+	import { UpdateSettings } from '$lib/wailsjs/go/app/App';
 
 	interface Props {
 		isOpen: boolean;
@@ -30,7 +30,7 @@
 	const updateDefaults = async (e: SubmitEvent) => {
 		e.preventDefault();
 		try {
-			await Update({ download: form });
+			await UpdateSettings({ download: form });
 			// TODO: this doesn't feel like the "correct" way to do this
 			WindowReload();
 		} catch (e: unknown) {

@@ -2,13 +2,13 @@
 	import { Button } from '$lib/components/ui/button';
 	import { toast } from 'svelte-sonner';
 
-	import { Download } from '$lib/wailsjs/go/download/Downloader';
 	import { config } from '$lib/wailsjs/go/models';
 
 	import Resolution from './fields/resolution.svelte';
 	import Url from './fields/url.svelte';
 	import Directory from './fields/directory.svelte';
 	import OutputTemplate from './fields/outputTemplate.svelte';
+	import { Download } from '$lib/wailsjs/go/app/App';
 
 	let { defaults }: { defaults: config.Download } = $props();
 

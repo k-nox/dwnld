@@ -2,7 +2,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Button } from '$lib/components/ui/button';
 
-	import { ChooseDirectory } from '$lib/wailsjs/go/download/Downloader';
+	import { ChooseDirectory } from '$lib/wailsjs/go/app/App';
 	import { LogDebug } from '$lib/wailsjs/runtime/runtime';
 	import type { LabeledFieldProps } from './types';
 	import type { config } from '$lib/wailsjs/go/models';
@@ -40,7 +40,6 @@
 		<Input
 			id={label}
 			class="border-0 focus-visible:ring-0"
-			required
 			readonly
 			placeholder={defaultValue}
 			{disabled}

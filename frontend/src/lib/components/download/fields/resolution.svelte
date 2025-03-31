@@ -17,7 +17,7 @@
 			limit for the available resolutions.
 		{/snippet}
 	</Label>
-	<Select.Root type="single" bind:value name="resolution" required {disabled}>
+	<Select.Root type="single" bind:value name="resolution" {disabled}>
 		<Select.Trigger class={classes}>
 			{value || defaultValue || 'Select a resolution'}
 		</Select.Trigger>

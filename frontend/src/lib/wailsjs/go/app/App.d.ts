@@ -4,6 +4,14 @@ import {config} from '../models';
 
 export function ChooseDirectory():Promise<string>;
 
-export function Defaults():Promise<config.Download>;
+export function DarkMode():Promise<void>;
 
 export function Download(arg1:string,arg2:config.Download):Promise<void>;
+
+export function LightMode():Promise<void>;
+
+export function ResetMode():Promise<void>;
+
+export function Settings():Promise<config.Settings>;
+
+export function UpdateSettings(arg1:config.Settings):Promise<void>;

@@ -36,12 +36,5 @@
 		{/snippet}
 	</Label>
 
-	<Input
-		class={classes}
-		id={label}
-		type="text"
-		placeholder={defaultValue || '%(title)s [%(id)s].%(ext)s'}
-		{disabled}
-		bind:value
-	/>
+	<Input class={classes} id={label} type="text" placeholder={defaultValue} {disabled} bind:value />
 </div>

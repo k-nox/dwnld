@@ -27,7 +27,7 @@ type Settings struct {
 	ctx context.Context
 }
 
-func Startup(ctx context.Context, s *Settings) {
+func (s *Settings) Startup(ctx context.Context) {
 	s.ctx = ctx
 }
 

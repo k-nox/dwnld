@@ -36,9 +36,7 @@ func main() {
 		BackgroundColour: theme.DarkBackground,
 		OnStartup:        app.Startup(a),
 		Bind: []interface{}{
-			a.Downloader,
-			a.Theme,
-			a.ConfigManager,
+			a,
 		},
 		EnumBind: []interface{}{
 			config.Resolutions,
