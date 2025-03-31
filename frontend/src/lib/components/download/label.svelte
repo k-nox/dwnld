@@ -8,10 +8,10 @@
 		children: Snippet;
 	}
 
-	let { children, info, ...props }: Props = $props();
+	let { children, info, class: className, ...props }: Props = $props();
 </script>
 
-<Label {...props} class="flex items-start gap-x-3 pb-1">
+<Label {...props} class={['flex w-full items-start justify-between gap-x-3  pb-1', className]}>
 	{@render children()}
 	{#if info}
 		<span class="flex h-[1lh] items-center">

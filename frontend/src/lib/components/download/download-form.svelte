@@ -1,16 +1,15 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { Switch } from '$lib/components/ui/switch';
 	import { toast } from 'svelte-sonner';
 	import { config } from '$lib/wailsjs/go/models';
 
-	import Label from './label.svelte';
 	import Resolution from './fields/resolution.svelte';
 	import Url from './fields/url.svelte';
 	import Directory from './fields/directory.svelte';
 	import OutputTemplate from './fields/outputTemplate.svelte';
 	import { Download } from '$lib/wailsjs/go/app/App';
 
+	import Switch from './switch.svelte';
 	let { defaults }: { defaults: config.Download } = $props();
 
 	const form: config.Download = $state({
@@ -46,13 +45,6 @@
 	};
 </script>
 
-<!-- {#snippet infoJSON()} -->
-<!-- 	<div class="flex items-center space-x-2"> -->
-<!-- 		<Switch id="write-info-json" /> -->
-<!-- 		<Label for="write-info-json">Write info.JSON</Label> -->
-<!-- 	</div> -->
-<!-- {/snippet} -->
-
 <form class="flex min-h-full flex-col items-center justify-center gap-4" onsubmit={downloadHandler}>
 	<div class="flex w-full flex-wrap items-end justify-center gap-4">
 		<div class="basis-1/4">
@@ -80,6 +72,29 @@
 				defaultValue={defaults.outputDirectory}
 				label="outputDirectory"
 			/>
+		</div>
+		<div class="flex basis-1/2 flex-col items-start gap-2">
+			<Switch
+				id="write-info-json"
+				bind:checked={form.writeInfoJSON}
+				disabled={loading}
+				label="Write info.json file"
+			>
+				{#snippet info()}
+					Whether or not the info.json file should be downloaded alongside the video.
+				{/snippet}
+			</Switch>
+			<Switch
+				id="embed-subtitles"
+				bind:checked={form.embedSubtitles}
+				disabled={loading}
+				label="Embed Subtitles"
+			>
+				{#snippet info()}
+					Currently only English subtitles can be selected, and auto-generated subtitles will be
+					ignored.
+				{/snippet}
+			</Switch>
 		</div>
 	</div>
 	<Button type="submit" disabled={loading}>Download</Button>

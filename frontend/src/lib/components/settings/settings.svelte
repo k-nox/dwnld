@@ -8,6 +8,7 @@
 	import { toast } from 'svelte-sonner';
 	import { WindowReload } from '$lib/wailsjs/runtime/runtime';
 	import { UpdateSettings } from '$lib/wailsjs/go/app/App';
+	import Switch from '../download/switch.svelte';
 
 	interface Props {
 		isOpen: boolean;
@@ -69,6 +70,27 @@
 					disabled={false}
 					label="defaultOutputDirectory"
 				/>
+				<Switch
+					id="default-write-info-json"
+					bind:checked={form.writeInfoJSON}
+					disabled={false}
+					label="Write info.json file"
+				>
+					{#snippet info()}
+						Whether or not the info.json file should be downloaded alongside the video.
+					{/snippet}
+				</Switch>
+				<Switch
+					id="default-embed-subtitles"
+					bind:checked={form.embedSubtitles}
+					disabled={false}
+					label="Embed Subtitles"
+				>
+					{#snippet info()}
+						Currently only English subtitles can be selected, and auto-generated subtitles will be
+						ignored.
+					{/snippet}
+				</Switch>
 				<Button type="submit" class="self-center" disabled={!isChanged}>Save Defaults</Button>
 			</div>
 		</form>
