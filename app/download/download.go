@@ -32,6 +32,14 @@ func (d *Downloader) Download(url string, opts config.Download) error {
 
 	cmd.Output(filepath.Join(opts.OutputDirectory, opts.OutputTemplate))
 
+	if opts.EmbedSubtitles {
+		cmd.EmbedSubs()
+	}
+
+	if opts.WriteInfoJSON {
+		cmd.WriteInfoJSON()
+	}
+
 	_, err := cmd.Run(d.ctx, url)
 	if err != nil {
 		return fmt.Errorf("error running download cmd: %w", err)

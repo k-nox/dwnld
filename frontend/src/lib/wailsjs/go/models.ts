@@ -12,6 +12,8 @@ export namespace config {
 	    outputDirectory?: string;
 	    outputTemplate?: string;
 	    targetResolution?: Resolution;
+	    embedSubtitles: boolean;
+	    writeInfoJSON: boolean;
 	}
 	export interface Settings {
 	    download: Download;

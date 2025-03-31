@@ -10,6 +10,17 @@ type Download struct {
 	OutputDirectory string     `json:"outputDirectory,omitempty" koanf:"outputDirectory"`
 	OutputTemplate  string     `json:"outputTemplate,omitempty" koanf:"outputTemplate"`
 	TargetResoltion Resolution `json:"targetResolution,omitempty" koanf:"targetResolution"`
+	EmbedSubtitles  bool       `json:"embedSubtitles" koanf:"embedSubtitles"`
+	WriteInfoJSON   bool       `json:"writeInfoJSON" koanf:"writeInfoJSON"`
+}
+
+func defaultDownloadSettings() Download {
+	return Download{
+		OutputTemplate:  "%(title)s [%(id)s].%(ext)s",
+		TargetResoltion: Resolution720,
+		EmbedSubtitles:  false,
+		WriteInfoJSON:   false,
+	}
 }
 
 func defaultDownloadDirectory() (string, error) {

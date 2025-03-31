@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
+	import { Switch } from '$lib/components/ui/switch';
 	import { toast } from 'svelte-sonner';
-
 	import { config } from '$lib/wailsjs/go/models';
 
+	import Label from './label.svelte';
 	import Resolution from './fields/resolution.svelte';
 	import Url from './fields/url.svelte';
 	import Directory from './fields/directory.svelte';
@@ -12,7 +13,10 @@
 
 	let { defaults }: { defaults: config.Download } = $props();
 
-	const form: config.Download = $state({});
+	const form: config.Download = $state({
+		embedSubtitles: defaults.embedSubtitles,
+		writeInfoJSON: defaults.writeInfoJSON
+	});
 	let url = $state('');
 
 	let loading = $state(false);
@@ -41,6 +45,13 @@
 		});
 	};
 </script>
+
+<!-- {#snippet infoJSON()} -->
+<!-- 	<div class="flex items-center space-x-2"> -->
+<!-- 		<Switch id="write-info-json" /> -->
+<!-- 		<Label for="write-info-json">Write info.JSON</Label> -->
+<!-- 	</div> -->
+<!-- {/snippet} -->
 
 <form class="flex min-h-full flex-col items-center justify-center gap-4" onsubmit={downloadHandler}>
 	<div class="flex w-full flex-wrap items-end justify-center gap-4">
