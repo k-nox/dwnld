@@ -31,13 +31,13 @@ func defaultSettings() Settings {
 	}
 }
 
-func New(configFilePath string) (*Manager, error) {
+func New(configFilePath string) *Manager {
 	return &Manager{
 		conf:         koanf.New("."),
 		fileProvider: file.Provider(configFilePath),
 		yamlParser:   yaml.Parser(),
 		filePath:     configFilePath,
-	}, nil
+	}
 }
 
 func (m *Manager) Startup() error {
