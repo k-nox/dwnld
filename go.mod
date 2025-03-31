@@ -20,6 +20,7 @@ require (
 require (
 	dario.cat/mergo v1.0.1
 	github.com/ProtonMail/go-crypto v1.1.5 // indirect
+	github.com/adrg/xdg v0.5.3
 	github.com/bep/debounce v1.2.1 // indirect
 	github.com/cloudflare/circl v1.6.0 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect

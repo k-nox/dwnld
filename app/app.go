@@ -22,14 +22,10 @@ type App struct {
 }
 
 func New(configFilePath string) (*App, error) {
-	cfgMgr, err := config.New(configFilePath)
-	if err != nil {
-		return nil, err
-	}
 	return &App{
 		theme:      &theme.Settings{},
 		downloader: &download.Downloader{},
-		cfgMgr:     cfgMgr,
+		cfgMgr:     config.New(configFilePath),
 	}, nil
 }
 

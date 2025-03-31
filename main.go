@@ -2,6 +2,8 @@ package main
 
 import (
 	"embed"
+	"os"
+	"slices"
 
 	"github.com/k-nox/dwnld/app"
 	"github.com/k-nox/dwnld/app/config"
@@ -19,7 +21,14 @@ var assets embed.FS
 
 func main() {
 	// Create an instance of the a structure
-	a, err := app.New("config.yaml")
+	isDevMode := slices.Contains(os.Args, "dev")
+
+	configFilePath, err := config.File(isDevMode)
+	if err != nil {
+		// TODO: handle
+		panic(err)
+	}
+	a, err := app.New(configFilePath)
 	if err != nil {
 		// TODO: handle
 		panic(err)
