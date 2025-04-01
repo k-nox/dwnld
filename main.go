@@ -54,25 +54,8 @@ func main() {
 			},
 		},
 		Windows: &windows.Options{
-			CustomTheme: &windows.ThemeSettings{
-				// Active
-				DarkModeTitleBar:  windows.RGB(theme.DarkBackground.R, theme.DarkBackground.G, theme.DarkBackground.B),
-				DarkModeTitleText: theme.DarkForeground,
-				DarkModeBorder:    theme.DarkBorder,
-
-				LightModeTitleBar:  windows.RGB(theme.LightBackground.R, theme.LightBackground.G, theme.LightBackground.B),
-				LightModeTitleText: theme.LightForegroud,
-				LightModeBorder:    theme.LightBorder,
-
-				// Inactive
-				DarkModeTitleBarInactive:  theme.DarkMuted,
-				DarkModeTitleTextInactive: theme.DarkMutedForeground,
-				DarkModeBorderInactive:    theme.DarkBorder,
-
-				LightModeTitleBarInactive:  theme.LightMuted,
-				LightModeTitleTextInactive: theme.LightMutedForeground,
-				LightModeBorderInactive:    theme.LightBorder,
-			},
+			DisableWindowIcon: true,
+			CustomTheme:       theme.WindowsTheme(),
 		},
 	})
 	if err != nil {
