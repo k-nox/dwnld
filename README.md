@@ -2,18 +2,32 @@
 
 <p align="center">a cross-platform, simple yt-dlp gui</p>
 
-![Dark Mode screenshot of dwnld](./assets/dark-mode.png)
-![Light mode screenshot of dwnld](./assets/light-mode.png)
+![Dark Mode screenshot of dwnld](./assets/dwnld-dark-mode.png)
+![Dark Mode screenshot of dwnld settings menu](./assets/dwnld-dark-mode-settings.png)
+![Light mode screenshot of dwnld](./assets/dwnld-light-mode.png)
+![Light mode screenshot of dwnld settings menu](./assets/dwnld-light-mode-settings.png)
 
 ## About
 
-dwnld is a simple GUI wrapper around the [go-ytdlp](github.com/lrstanley/go-ytdlp) package, which itself is a wrapper for [yt-dlp](https://github.com/yt-dlp/yt-dlp).
-Currently this app is very limited and only allows you to choose the URL, output directory, preferred resolution, and [output template](https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#output-template). It has a preference towards h264 and m4a codecs for video and audio respectively.
+dwnld is a GUI wrapper around the [go-ytdlp](github.com/lrstanley/go-ytdlp) package, which itself is a wrapper for [yt-dlp](https://github.com/yt-dlp/yt-dlp).
+
+dwnld is not intended to expose all options available in yt-dlp.
+Instead, it exposes a small selection of options relevant to my use cases, including output directory, preferred resolution, output template, embedding subtitles, and downloading metadata files.
+It has a preference for h264 and m4a codecs for video and audio respectively.
+
+This does not mean dwnld will never expose additional options and configurability.
+If you find dwnld useful and there's another option that would be helpful to you, please reach out.
 
 dwnld is powered by the excellent [wails](https://wails.io/) framework for building cross-platform desktop applications with Go and JavaScript.
-The frontend is powered by [Svelte/SvelteKit](https://svelte.dev/), with heavy use of [shadcn-svelte](https://next.shadcn-svelte.com/) for components.
+The frontend is powered by [Svelte/SvelteKit](https://svelte.dev/), with [shadcn-svelte](https://next.shadcn-svelte.com/) for components.
 
-It is highly recommended to install [ffmpeg](https://www.ffmpeg.org/), or resolutions may be limited.
+It is highly recommended to install [ffmpeg](https://www.ffmpeg.org/), or video resolutions may be limited.
+
+You can optionally install yt-dlp yourself.
+If you don't dwnld will install it for you on startup.
+
+dwnld is cross-platform, but I have only tested it on macOS and Windows machines.
+Use on linux at your own risk.
 
 ## Live Development
 
