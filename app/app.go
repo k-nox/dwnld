@@ -21,21 +21,28 @@ type App struct {
 	cfgMgr     *config.Manager
 }
 
-func New(configFilePath string) (*App, error) {
+func New() *App {
 	return &App{
 		theme:      &theme.Settings{},
 		downloader: &download.Downloader{},
-		cfgMgr:     config.New(configFilePath),
-	}, nil
+	}
 }
 
-func Startup(app *App) func(context.Context) {
+func Startup(app *App, isDevMode bool) func(context.Context) {
 	return func(ctx context.Context) {
 		app.ctx = ctx
-		if err := app.cfgMgr.Startup(); err != nil {
-			// TODO: handle
-			panic(err)
+
+		configFilePath, err := config.File(isDevMode)
+		if err != nil {
+			app.logErrAndQuit(err)
 		}
+
+		app.cfgMgr = config.New(configFilePath)
+
+		if err := app.cfgMgr.Startup(); err != nil {
+			app.logErrAndQuit(err)
+		}
+
 		app.theme.Startup(ctx)
 		app.downloader.Startup(ctx)
 	}
@@ -80,7 +87,7 @@ func (a *App) Settings() *config.Settings {
 
 func (a *App) UpdateSettings(updated config.Settings) error {
 	if err := a.cfgMgr.Update(updated); err != nil {
-		return err
+		return a.logErrAndReturn(err)
 	}
 	return nil
 }
@@ -88,10 +95,14 @@ func (a *App) UpdateSettings(updated config.Settings) error {
 func (a *App) Download(url string, opts config.Download) error {
 	err := mergo.Merge(&opts, a.Settings().Download)
 	if err != nil {
-		return fmt.Errorf("error merging opts with default opts: %w", err)
+		return a.logErrAndReturn(fmt.Errorf("error merging opts with default opts: %w", err))
 	}
 
-	return a.downloader.Download(url, opts)
+	err = a.downloader.Download(url, opts)
+	if err != nil {
+		return a.logErrAndReturn(err)
+	}
+	return nil
 }
 
 func (a *App) DarkMode() {
@@ -119,7 +130,7 @@ func (a *App) ChooseDirectory() (string, error) {
 
 	dir, err := runtime.OpenDirectoryDialog(a.ctx, opts)
 	if err != nil {
-		return "", fmt.Errorf("error choosing directory: %w", err)
+		return "", a.logErrAndReturn(fmt.Errorf("error choosing directory: %w", err))
 	}
 	return dir, nil
 }
@@ -127,4 +138,19 @@ func (a *App) ChooseDirectory() (string, error) {
 func isDir(dir string) bool {
 	info, err := os.Stat(dir)
 	return err == nil && info.IsDir()
+}
+
+func (a *App) logErrAndReturn(err error) error {
+	runtime.LogError(a.ctx, err.Error())
+	return err
+}
+
+func (a *App) logErrAndQuit(err error) {
+	runtime.LogError(a.ctx, err.Error())
+	runtime.MessageDialog(a.ctx, runtime.MessageDialogOptions{
+		Type:    runtime.ErrorDialog,
+		Title:   "Unable to start app due to error",
+		Message: err.Error(),
+	})
+	runtime.Quit(a.ctx)
 }

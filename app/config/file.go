@@ -9,15 +9,27 @@ import (
 	"github.com/adrg/xdg"
 )
 
-func File(devMode bool) (string, error) {
-	if devMode {
-		err := check("config.yaml")
-		return "config.yaml", err
+func File(isDevMode bool) (string, error) {
+	if isDevMode {
+		return "config.yaml", check("config.yaml")
 	}
 
 	path, err := xdg.ConfigFile(filepath.Join("dwnld", "dwnld.yaml"))
 	if err != nil {
 		return path, fmt.Errorf("error looking for config file: %w", err)
+	}
+
+	return path, check(path)
+}
+
+func LogFile(isDevMode bool) (string, error) {
+	if isDevMode {
+		return "error.log", check("error.log")
+	}
+
+	path, err := xdg.DataFile(filepath.Join("dwnld", "error.log"))
+	if err != nil {
+		return path, fmt.Errorf("error looking for error log file: %w", err)
 	}
 
 	return path, check(path)

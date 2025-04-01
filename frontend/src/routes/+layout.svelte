@@ -10,7 +10,7 @@
 </script>
 
 <ModeWatcher />
-<Toaster richColors />
+<Toaster richColors duration={5000} />
 <div class="flex h-screen flex-col">
 	<header class="flex flex-row items-center justify-end gap-6 p-6" style="--wails-draggable:drag">
 		<div style="--wails-draggable:nodrag">

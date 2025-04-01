@@ -10,6 +10,7 @@ import (
 	"github.com/k-nox/dwnld/app/theme"
 
 	"github.com/wailsapp/wails/v2"
+	"github.com/wailsapp/wails/v2/pkg/logger"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
 	"github.com/wailsapp/wails/v2/pkg/options/mac"
@@ -22,20 +23,12 @@ var assets embed.FS
 func main() {
 	// Create an instance of the a structure
 	isDevMode := slices.Contains(os.Args, "dev")
+	devModeFileLogger := isDevMode && slices.Contains(os.Args, "filelogger")
 
-	configFilePath, err := config.File(isDevMode)
-	if err != nil {
-		// TODO: handle
-		panic(err)
-	}
-	a, err := app.New(configFilePath)
-	if err != nil {
-		// TODO: handle
-		panic(err)
-	}
+	a := app.New()
 
 	// Create application with options
-	err = wails.Run(&options.App{
+	err := wails.Run(&options.App{
 		Title:  "dwnld",
 		Width:  1024,
 		Height: 768,
@@ -43,7 +36,7 @@ func main() {
 			Assets: assets,
 		},
 		BackgroundColour: theme.DarkBackground,
-		OnStartup:        app.Startup(a),
+		OnStartup:        app.Startup(a, isDevMode),
 		Bind: []interface{}{
 			a,
 		},
@@ -52,6 +45,7 @@ func main() {
 		},
 		EnableDefaultContextMenu: true,
 		Menu:                     app.Menu(a),
+		Logger:                   customLogger(isDevMode, devModeFileLogger),
 		Mac: &mac.Options{
 			TitleBar: mac.TitleBarHiddenInset(),
 			About: &mac.AboutInfo{
@@ -84,4 +78,17 @@ func main() {
 	if err != nil {
 		println("Error:", err.Error())
 	}
+}
+
+func customLogger(isDevMode, devModeFileLogger bool) logger.Logger {
+	if isDevMode && !devModeFileLogger {
+		return logger.NewDefaultLogger()
+	}
+
+	path, err := config.LogFile(isDevMode)
+	if err != nil {
+		panic(err)
+	}
+
+	return logger.NewFileLogger(path)
 }
