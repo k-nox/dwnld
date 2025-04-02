@@ -2,10 +2,10 @@
 
 <p align="center">a cross-platform, simple yt-dlp gui</p>
 
-![Dark Mode screenshot of dwnld](./assets/dwnld-dark-mode.png)
-![Dark Mode screenshot of dwnld settings menu](./assets/dwnld-dark-mode-settings.png)
-![Light mode screenshot of dwnld](./assets/dwnld-light-mode.png)
-![Light mode screenshot of dwnld settings menu](./assets/dwnld-light-mode-settings.png)
+![Dark Mode screenshot of dwnld](./docs/dwnld-dark-mode.png)
+![Dark Mode screenshot of dwnld settings menu](./docs/dwnld-dark-mode-settings.png)
+![Light mode screenshot of dwnld](./docs/dwnld-light-mode.png)
+![Light mode screenshot of dwnld settings menu](./docs/dwnld-light-mode-settings.png)
 
 ## About
 
