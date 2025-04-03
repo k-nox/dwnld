@@ -135,6 +135,8 @@ i'm putting dwnld down for now BUT future improvements could include:
   - including allowing for only audio
 - saving multiple output template strings
 - more granular subtitle options
+- github action to build & release binaries
+- test on linux
 
 ---
 
