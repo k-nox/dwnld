@@ -91,12 +91,12 @@ type app struct {}
 type returned struct { val int }
 func (a *app) CallMe() returnedStruct { return returnedStruct{ val: 3 } }
 func main() {
- err := wails.Run() &options.App{
+ err := wails.Run(&options.App{
   Bind: []interface{}{
    app,
   },
   // ...
- }
+ })
 }
 ```
 
@@ -144,10 +144,13 @@ i'm putting dwnld down for now BUT future improvements could include:
 - test on linux
 - custom icon
 - code signing? how does that work?
+- unit tests
+- css grid instead of flexbox
 
 ---
 
 ## that's all, thank you
 
 i had a really fun time with this!
-please reach out if you're interested in learning more or pairing on wails, svelte, or anything else go-related!
+
+please reach out if you're interested in learning more or pairing on wails, svelte, or anything else go-related 😄
