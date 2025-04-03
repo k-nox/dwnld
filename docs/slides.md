@@ -1,4 +1,5 @@
 ---
+theme: ./style.json
 author: Lux Barker
 paging: '%d / %d'
 ---
@@ -17,8 +18,8 @@ agenda:
 
 we're going to talk about:
 
-- what it is
-- what it is not
+- what dwnld is
+- what dwnld is not
 - quick demo
 
 ---
@@ -27,6 +28,7 @@ we're going to talk about:
 
 - minimal and simple
 - a gui wrapper around [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+  - yt-dlp == a cli tool for downloading videos (not just from youtube, despite the name!)
 
 ---
 
@@ -48,19 +50,22 @@ we're going to talk about:
 
 2 main reasons:
 
-- i wanted to learn new things
-  - [wails](https://wails.io/)
-  - [svelte](https://svelte.dev/)
-  - [tailwind](https://v3.tailwindcss.com/)
-- i wanted to make something my partner could (and would) use
-  - he is not a techy person
-  - he is fairly resistant to new software - once he find something that works, he sticks with it
-    - as someone who loves trying out new tools, his commitment to sticking with things impresses and confuses me
-  - but he also likes simplicity & minimalism
-  - the web-based tools he was using before were:
-    - often visually loud & obnoxious to use
-    - offered features he didn't care about
-    - but didn't offer features he actually wanted
+### learn new things
+
+- [wails](https://wails.io/)
+- [svelte](https://svelte.dev/)
+- [tailwind](https://v3.tailwindcss.com/)
+
+### make something my partner could (and *would*) use
+
+- he is not a techy person
+- he is fairly resistant to new software - once he find something that works, he sticks with it
+  - as someone who loves trying out new tools, his commitment to sticking with things impresses and confuses me
+- but he also likes simplicity & minimalism
+- the web-based tools he was using before were:
+  - often visually loud & obnoxious to use
+  - offered features he didn't care about
+  - but didn't offer features he actually wanted
 
 ---
 
@@ -137,6 +142,8 @@ i'm putting dwnld down for now BUT future improvements could include:
 - more granular subtitle options
 - github action to build & release binaries
 - test on linux
+- custom icon
+- code signing? how does that work?
 
 ---
 
